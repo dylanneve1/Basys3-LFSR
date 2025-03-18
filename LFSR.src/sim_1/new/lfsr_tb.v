@@ -4,6 +4,7 @@ module lfsr_tb;
 
     reg clk, sh_en, rst_n;
     wire [15:0] Q_out;
+    wire [15:0] ticks;
     wire max_tick_reg;
 
     lfsr uut (
@@ -11,7 +12,8 @@ module lfsr_tb;
         .sh_en(sh_en),
         .rst_n(rst_n),
         .Q_out(Q_out),
-        .max_tick_reg(max_tick_reg)
+        .max_tick_reg(max_tick_reg),
+        .ticks(ticks)
     );
 
     initial begin
@@ -32,6 +34,10 @@ module lfsr_tb;
 
     initial begin
         $monitor("Time=%t, Q_out=%h, max_tick_reg=%b", $time, Q_out, max_tick_reg);
+    end
+    
+    always @(posedge max_tick_reg) begin
+        $display("Max tick reached!");
     end
 
 endmodule
